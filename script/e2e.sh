@@ -2,22 +2,17 @@
 
 set -eu
 
-# for mysql container
-chmod o+w test-data/logs
-
+chmod o+w test-data/logs # for mysql container
 docker compose up -d
-
-# for app container
-sudo chmod o+r test-data/logs/slow.log
-
+sudo chmod o+r test-data/logs/slow.log # for app container
 mysql --protocol=tcp -h localhost -P 3306 -u root -proot -e "SELECT SLEEP(2);"
-docker compose logs
 logs="$(docker logs app 2>&1)"
 
 query='"Query":"SELECT SLEEP(2);"'
 if [[ "$logs" == *"$query"* ]]; then
   echo "query: ok"
 else
+  docker compose logs
   docker compose down
   exit 1
 fi
@@ -26,6 +21,7 @@ plan='"plan":[{"Id":1,"SelectType":{"String":"SIMPLE","Valid":true},"Table":{"St
 if [[ "$logs" == *"$plan"* ]]; then
   echo "plan: ok"
 else
+  docker compose logs
   docker compose down
   exit 1
 fi
