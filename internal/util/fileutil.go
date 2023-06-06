@@ -9,6 +9,9 @@ import (
 
 func GetLogFilePath() string {
 	path := os.Getenv("LOG_FILE_PATH")
+	if path == "" {
+		path = "/tmp/slow.log"
+	}
 	return path
 }
 

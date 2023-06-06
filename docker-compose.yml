@@ -1,0 +1,35 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0.33
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+    volumes:
+      - ./test-data/init:/docker-entrypoint-initdb.d
+      - ./test-data/logs:/tmp
+    ports:
+      - 3306:3306
+    healthcheck:
+      # not `mysqladmin ping` because tcp port will open after start
+      test: printf "GET / HTTP/1.1\n\n" > /dev/tcp/127.0.0.1/3306
+      interval: 5s
+      timeout: 1s
+      retries: 20
+  app:
+    image: app
+    build: .
+    container_name: app
+    entrypoint: ["main"]
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - ./test-data/logs:/tmp
+    restart: on-failure:10
+    depends_on:
+      db:
+        condition: service_healthy
