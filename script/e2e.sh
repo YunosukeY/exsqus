@@ -7,6 +7,7 @@ chmod 777 test-data/logs
 
 docker compose up -d
 mysql --protocol=tcp -h localhost -P 3306 -u root -proot -e "SELECT SLEEP(2);"
+docker compose logs
 logs="$(docker logs app 2>&1)"
 
 query='"Query":"SELECT SLEEP(2);"'
