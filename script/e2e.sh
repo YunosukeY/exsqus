@@ -2,6 +2,9 @@
 
 set -eu
 
+# for mysql container
+chmod 777 test-data/logs
+
 docker compose up -d
 mysql --protocol=tcp -h localhost -P 3306 -u root -proot -e "SELECT SLEEP(2);"
 logs="$(docker logs app 2>&1)"
