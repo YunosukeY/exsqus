@@ -16,7 +16,7 @@ var timePattern = regexp.MustCompile(`# Time: (.*)`)
 var queryTimePattern = regexp.MustCompile(`# Query_time: ([\d\.]*).*Lock_time: ([\d\.]*).*Rows_sent: (\d*).*Rows_examined: (\d+)`)
 
 type Log struct {
-	time, queryTime, lockTime, rowsSent, rowsExamined, Query string
+	Time, QueryTime, LockTime, RowsSent, RowsExamined, Query string
 }
 
 func GetLastQueryLog() (*Log, error) {

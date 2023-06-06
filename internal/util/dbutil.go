@@ -47,8 +47,8 @@ func GetDB() (*sql.DB, error) {
 }
 
 type Row struct {
-	id                                                                                               int
-	selectType, table, partitions, accessType, possibleKeys, key, keyLen, ref, rows, filtered, extra sql.NullString
+	Id                                                                                               int
+	SelectType, Table, Partitions, AccessType, PossibleKeys, Key, KeyLen, Ref, Rows, Filtered, Extra sql.NullString
 }
 
 func GetPlan(db *sql.DB, query string) ([]Row, error) {
@@ -61,7 +61,7 @@ func GetPlan(db *sql.DB, query string) ([]Row, error) {
 	rs := []Row{}
 	for rows.Next() {
 		r := Row{}
-		err := rows.Scan(&r.id, &r.selectType, &r.table, &r.partitions, &r.accessType, &r.possibleKeys, &r.key, &r.keyLen, &r.ref, &r.rows, &r.filtered, &r.extra)
+		err := rows.Scan(&r.Id, &r.SelectType, &r.Table, &r.Partitions, &r.AccessType, &r.PossibleKeys, &r.Key, &r.KeyLen, &r.Ref, &r.Rows, &r.Filtered, &r.Extra)
 		if err != nil {
 			return nil, err
 		}

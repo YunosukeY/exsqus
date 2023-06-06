@@ -1,29 +1,32 @@
 package app
 
 import (
-	"log"
-
 	"github.com/YunosukeY/explain-slow-query/internal/util"
 	"github.com/fsnotify/fsnotify"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 )
 
 func Run() {
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	log.Logger = log.With().Caller().Logger()
+
 	path := util.GetLogFilePath()
-	log.Println("log file path:", path)
+	log.Info().Str("log file path", path).Send()
 
 	db, err := util.GetDB()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err).Send()
 	}
 	defer db.Close()
-	log.Println("DB connected")
+	log.Info().Msg("MySQL connected")
 
 	watcher, err := util.GetWatcher()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err).Send()
 	}
 	defer watcher.Close()
-	log.Println("Start watching")
+	log.Info().Msg("Start watching")
 
 	for {
 		select {
@@ -34,22 +37,22 @@ func Run() {
 			if event.Op&fsnotify.Write == fsnotify.Write && event.Name == path {
 				l, err := util.GetLastQueryLog()
 				if err != nil {
-					log.Println("Failed to get last query log:", err)
+					log.Info().Err(err).Msg("Failed to get last query log")
 					continue
 				}
-				log.Println("Log:", l)
+				log.Info().Interface("log", l).Send()
 				plan, err := util.GetPlan(db, l.Query)
 				if err != nil {
-					log.Println("Failed to get plan:", err)
+					log.Info().Err(err).Msg("Failed to get plan")
 					continue
 				}
-				log.Println("Plan:", plan)
+				log.Info().Interface("plan", plan).Send()
 			}
 		case err, ok := <-watcher.Errors:
 			if !ok {
 				return
 			}
-			log.Println("Watcher error:", err)
+			log.Info().Err(err).Msg("Watch error")
 		}
 	}
 }
