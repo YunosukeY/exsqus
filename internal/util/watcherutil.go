@@ -1,16 +1,11 @@
 package util
 
 import (
-	"os"
-
 	"github.com/fsnotify/fsnotify"
 )
 
 func GetWatcher() (*fsnotify.Watcher, error) {
-	path := os.Getenv("LOG_FILE_PATH")
-	if path == "" {
-
-	}
+	path := GetLogFilePath()
 
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {

@@ -2,17 +2,13 @@ package app
 
 import (
 	"log"
-	"os"
 
 	"github.com/YunosukeY/explain-slow-query/internal/util"
 	"github.com/fsnotify/fsnotify"
 )
 
 func Run() {
-	path := os.Getenv("LOG_FILE_PATH")
-	if path == "" {
-
-	}
+	path := util.GetLogFilePath()
 	log.Println("log file path:", path)
 
 	db, err := util.GetDB()

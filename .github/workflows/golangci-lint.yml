@@ -1,0 +1,17 @@
+name: golangci-lint
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  golangci-lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aquaproj/aqua-installer@v2.1.1
+        with:
+          aqua_version: v2.8.0
+      - run: golangci-lint run

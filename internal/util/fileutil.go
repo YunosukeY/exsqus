@@ -7,6 +7,11 @@ import (
 	"regexp"
 )
 
+func GetLogFilePath() string {
+	path := os.Getenv("LOG_FILE_PATH")
+	return path
+}
+
 var timePattern = regexp.MustCompile(`# Time: (.*)`)
 var queryTimePattern = regexp.MustCompile(`# Query_time: ([\d\.]*).*Lock_time: ([\d\.]*).*Rows_sent: (\d*).*Rows_examined: (\d+)`)
 
@@ -15,10 +20,7 @@ type Log struct {
 }
 
 func GetLastQueryLog() (*Log, error) {
-	path := os.Getenv("LOG_FILE_PATH")
-	if path == "" {
-
-	}
+	path := GetLogFilePath()
 
 	file, err := os.Open(path)
 	if err != nil {
