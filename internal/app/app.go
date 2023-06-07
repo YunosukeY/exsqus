@@ -34,6 +34,7 @@ func Run() {
 			if !ok {
 				return
 			}
+
 			if event.Op&fsnotify.Write == fsnotify.Write && event.Name == path {
 				l, err := util.GetLastQueryLog()
 				if err != nil {
@@ -41,6 +42,7 @@ func Run() {
 					continue
 				}
 				log.Info().Interface("log", l).Send()
+
 				plan, err := util.GetPlan(db, l.Query)
 				if err != nil {
 					log.Info().Err(err).Msg("Failed to get plan")
@@ -52,6 +54,7 @@ func Run() {
 			if !ok {
 				return
 			}
+
 			log.Info().Err(err).Msg("Watch error")
 		}
 	}

@@ -12,6 +12,7 @@ func GetLogFilePath() string {
 	if path == "" {
 		path = "/tmp/slow.log"
 	}
+
 	return path
 }
 
