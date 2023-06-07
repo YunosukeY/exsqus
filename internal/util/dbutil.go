@@ -8,7 +8,7 @@ import (
 	"github.com/go-sql-driver/mysql"
 )
 
-func getConfig() mysql.Config {
+func GetConfig() mysql.Config {
 	host := os.Getenv("MYSQL_HOST")
 	port := os.Getenv("MYSQL_PORT")
 	user := os.Getenv("MYSQL_USER")
@@ -32,9 +32,7 @@ func getConfig() mysql.Config {
 	}
 }
 
-func GetDB() (*sql.DB, error) {
-	c := getConfig()
-
+func GetDB(c mysql.Config) (*sql.DB, error) {
 	db, err := sql.Open("mysql", c.FormatDSN())
 	if err != nil {
 		db.Close()

@@ -14,14 +14,15 @@ func Run() {
 	path := util.GetLogFilePath()
 	log.Info().Str("log file path", path).Send()
 
-	db, err := util.GetDB()
+	c := util.GetConfig()
+	db, err := util.GetDB(c)
 	if err != nil {
 		log.Fatal().Err(err).Send()
 	}
 	defer db.Close()
 	log.Info().Msg("MySQL connected")
 
-	watcher, err := util.GetWatcher()
+	watcher, err := util.GetWatcher(path)
 	if err != nil {
 		log.Fatal().Err(err).Send()
 	}
@@ -36,7 +37,7 @@ func Run() {
 			}
 
 			if event.Op&fsnotify.Write == fsnotify.Write && event.Name == path {
-				l, err := util.GetLastQueryLog()
+				l, err := util.GetLastQueryLog(path)
 				if err != nil {
 					log.Info().Err(err).Msg("Failed to get last query log")
 					continue

@@ -23,9 +23,7 @@ type Log struct {
 	Time, QueryTime, LockTime, RowsSent, RowsExamined, Query string
 }
 
-func GetLastQueryLog() (*Log, error) {
-	path := GetLogFilePath()
-
+func GetLastQueryLog(path string) (*Log, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
