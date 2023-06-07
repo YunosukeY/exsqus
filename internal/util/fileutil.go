@@ -19,6 +19,7 @@ func GetLogFilePath() string {
 
 var timePattern = regexp.MustCompile(`# Time: (.*)`)
 var queryTimePattern = regexp.MustCompile(`# Query_time: ([\d\.]*).*Lock_time: ([\d\.]*).*Rows_sent: (\d*).*Rows_examined: (\d+)`)
+var queryPattern = regexp.MustCompile(`(.*)\n`)
 
 type Log struct {
 	Time, QueryTime, LockTime, RowsSent, RowsExamined, Query string
@@ -43,8 +44,9 @@ func GetLastQueryLog(reader *bufio.Reader) (*Log, error) {
 			lockTime = match[2]
 			rowsSent = match[3]
 			rowsExamined = match[4]
-		} else {
-			query = line
+		} else if queryPattern.MatchString(line) {
+			match := queryPattern.FindStringSubmatch(line)
+			query = match[1]
 		}
 	}
 
