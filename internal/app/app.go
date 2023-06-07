@@ -2,7 +2,6 @@ package app
 
 import (
 	"bufio"
-	"io"
 	"os"
 
 	"github.com/YunosukeY/exsqus/internal/util"
@@ -38,13 +37,8 @@ func Run() {
 	}
 	defer file.Close()
 	reader := bufio.NewReader(file)
-	for {
-		_, err := reader.ReadString('\n')
-		if err == io.EOF {
-			break
-		} else if err != nil {
-			log.Fatal().Err(err).Send()
-		}
+	if err := util.SkipAll(reader); err != nil {
+		log.Fatal().Err(err).Send()
 	}
 
 	for {
