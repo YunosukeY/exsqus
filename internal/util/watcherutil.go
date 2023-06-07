@@ -4,9 +4,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 )
 
-func GetWatcher() (*fsnotify.Watcher, error) {
-	path := GetLogFilePath()
-
+func GetWatcher(path string) (*fsnotify.Watcher, error) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		return nil, err

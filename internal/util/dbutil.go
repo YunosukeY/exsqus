@@ -8,7 +8,7 @@ import (
 	"github.com/go-sql-driver/mysql"
 )
 
-func getConfig() mysql.Config {
+func GetConfig() mysql.Config {
 	host := os.Getenv("MYSQL_HOST")
 	port := os.Getenv("MYSQL_PORT")
 	user := os.Getenv("MYSQL_USER")
@@ -32,17 +32,18 @@ func getConfig() mysql.Config {
 	}
 }
 
-func GetDB() (*sql.DB, error) {
-	c := getConfig()
+func GetDB(c mysql.Config) (*sql.DB, error) {
 	db, err := sql.Open("mysql", c.FormatDSN())
 	if err != nil {
 		db.Close()
 		return nil, err
 	}
+
 	if err := db.Ping(); err != nil {
 		db.Close()
 		return nil, err
 	}
+
 	return db, nil
 }
 
@@ -51,7 +52,12 @@ type Row struct {
 	SelectType, Table, Partitions, AccessType, PossibleKeys, Key, KeyLen, Ref, Rows, Filtered, Extra sql.NullString
 }
 
-func GetPlan(db *sql.DB, query string) ([]Row, error) {
+type Plan struct {
+	Rows []Row
+	Id   string
+}
+
+func GetPlan(db *sql.DB, query string) (*Plan, error) {
 	rows, err := db.Query("EXPLAIN " + query)
 	if err != nil {
 		return nil, err
@@ -61,11 +67,13 @@ func GetPlan(db *sql.DB, query string) ([]Row, error) {
 	rs := []Row{}
 	for rows.Next() {
 		r := Row{}
+
 		err := rows.Scan(&r.Id, &r.SelectType, &r.Table, &r.Partitions, &r.AccessType, &r.PossibleKeys, &r.Key, &r.KeyLen, &r.Ref, &r.Rows, &r.Filtered, &r.Extra)
 		if err != nil {
 			return nil, err
 		}
+
 		rs = append(rs, r)
 	}
-	return rs, nil
+	return &Plan{rs, ""}, nil
 }
