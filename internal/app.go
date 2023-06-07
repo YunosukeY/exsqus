@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/YunosukeY/explain-slow-query/internal/util"
+	"github.com/YunosukeY/exsqus/internal/util"
 	"github.com/fsnotify/fsnotify"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"

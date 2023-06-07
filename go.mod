@@ -1,4 +1,4 @@
-module github.com/YunosukeY/explain-slow-query
+module github.com/YunosukeY/exsqus
 
 go 1.19
 

@@ -1,7 +1,7 @@
 package main
 
 import (
-	app "github.com/YunosukeY/explain-slow-query/internal"
+	app "github.com/YunosukeY/exsqus/internal"
 )
 
 func main() {
