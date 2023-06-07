@@ -1,0 +1,14 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:base", "github>aquaproj/aqua-renovate-config#1.6.0"],
+
+  ignorePresets: [":prHourlyLimit2"],
+  branchConcurrentLimit: 0,
+  prHourlyLimit: 0,
+  automerge: true,
+  platformAutomerge: true,
+
+  labels: ["dependencies"],
+
+  reviewers: ["YunosukeY"],
+}
