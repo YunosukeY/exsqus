@@ -1,6 +1,9 @@
 package app
 
 import (
+	"bufio"
+	"os"
+
 	"github.com/YunosukeY/exsqus/internal/util"
 	"github.com/fsnotify/fsnotify"
 	"github.com/rs/zerolog/log"
@@ -27,6 +30,13 @@ func Run() {
 	defer watcher.Close()
 	log.Info().Msg("Start watching")
 
+	file, err := os.Open(path)
+	if err != nil {
+		log.Fatal().Err(err).Send()
+	}
+	defer file.Close()
+	reader := bufio.NewReader(file)
+
 	for {
 		select {
 		case event, ok := <-watcher.Events:
@@ -35,7 +45,7 @@ func Run() {
 			}
 
 			if event.Op&fsnotify.Write == fsnotify.Write && event.Name == path {
-				l, err := util.GetLastQueryLog(path)
+				l, err := util.GetLastQueryLog(reader)
 				if err != nil {
 					log.Info().Err(err).Msg("Failed to get last query log")
 					continue

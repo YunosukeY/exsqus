@@ -24,14 +24,7 @@ type Log struct {
 	Time, QueryTime, LockTime, RowsSent, RowsExamined, Query string
 }
 
-func GetLastQueryLog(path string) (*Log, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	defer file.Close()
-
-	reader := bufio.NewReader(file)
+func GetLastQueryLog(reader *bufio.Reader) (*Log, error) {
 	var time, queryTime, lockTime, rowsSent, rowsExamined, query string
 	for {
 		line, err := reader.ReadString('\n')
