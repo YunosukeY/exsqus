@@ -3,6 +3,7 @@ package util
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 )
@@ -30,10 +31,15 @@ func GetLastQueryLog(path string) (*Log, error) {
 	}
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
+	reader := bufio.NewReader(file)
 	var time, queryTime, lockTime, rowsSent, rowsExamined, query string
-	for scanner.Scan() {
-		line := scanner.Text()
+	for {
+		line, err := reader.ReadString('\n')
+		if err == io.EOF {
+			break
+		} else if err != nil {
+			return nil, err
+		}
 
 		if timePattern.MatchString(line) {
 			match := timePattern.FindStringSubmatch(line)
@@ -49,9 +55,6 @@ func GetLastQueryLog(path string) (*Log, error) {
 		}
 	}
 
-	if err := scanner.Err(); err != nil {
-		return nil, err
-	}
 	if time == "" || queryTime == "" || lockTime == "" || rowsSent == "" || rowsExamined == "" || query == "" {
 		return nil, fmt.Errorf("No query log found")
 	}
