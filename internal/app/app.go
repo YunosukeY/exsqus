@@ -39,8 +39,11 @@ func Run() {
 	defer file.Close()
 	reader := bufio.NewReader(file)
 	for {
-		if _, err := reader.ReadString('\n'); err == io.EOF {
+		_, err := reader.ReadString('\n')
+		if err == io.EOF {
 			break
+		} else if err != nil {
+			log.Fatal().Err(err).Send()
 		}
 	}
 
@@ -54,12 +57,12 @@ func Run() {
 			if event.Op&fsnotify.Write == fsnotify.Write && event.Name == path {
 				id, err := uuid.NewRandom()
 				if err != nil {
-					log.Warn().Err(err).Send()
+					log.Err(err).Send()
 				}
 
 				l, err := util.GetLastQueryLog(reader)
 				if err != nil {
-					log.Info().Err(err).Msg("Failed to get last query log")
+					log.Err(err).Msg("Failed to get last query log")
 					continue
 				}
 				l.Id = id.String()
@@ -67,7 +70,7 @@ func Run() {
 
 				plan, err := util.GetPlan(db, l.Query)
 				if err != nil {
-					log.Info().Err(err).Msg("Failed to get plan")
+					log.Err(err).Msg("Failed to get plan")
 					continue
 				}
 				plan.Id = id.String()
@@ -78,7 +81,7 @@ func Run() {
 				return
 			}
 
-			log.Info().Err(err).Msg("Watch error")
+			log.Err(err).Msg("Watch error")
 		}
 	}
 }
