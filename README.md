@@ -1,6 +1,7 @@
 # exsqus - Explain Slow Queries
 
 [![build](https://github.com/YunosukeY/exsqus/actions/workflows/build.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/exsqus/actions/workflows/build.yaml)
+[![ci](https://github.com/YunosukeY/exsqus/actions/workflows/ci.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/exsqus/actions/workflows/ci.yaml)
 [![e2e](https://github.com/YunosukeY/exsqus/actions/workflows/e2e.yaml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/exsqus/actions/workflows/e2e.yaml)
 [![lint](https://github.com/YunosukeY/exsqus/actions/workflows/lint.yml/badge.svg?branch=master&event=push)](https://github.com/YunosukeY/exsqus/actions/workflows/lint.yml)
 
