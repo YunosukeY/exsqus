@@ -17,6 +17,7 @@ require (
 
 require (
 	github.com/google/uuid v1.3.0
+	github.com/joho/godotenv v1.5.1
 	github.com/rs/zerolog v1.29.1
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/sys v0.0.0-20220908164124-27713097b956 // indirect

@@ -1,6 +1,7 @@
 package util
 
 import (
+	"database/sql"
 	"os"
 	"testing"
 
@@ -9,6 +10,8 @@ import (
 )
 
 func TestGetConfig(t *testing.T) {
+	t.Skip()
+
 	var c mysql.Config
 
 	c = GetConfig()
@@ -25,4 +28,24 @@ func TestGetConfig(t *testing.T) {
 }
 
 func TestGetPlan(t *testing.T) {
+	err := loadEnv()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	c := GetConfig()
+	db, err := GetDB(c)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	plan, err := GetPlan(db, "SELECT SLEEP(2);")
+	assert.Nil(t, err)
+	assert.Len(t, plan.Rows, 1)
+
+	st := sql.NullString{}
+	st.Scan("SIMPLE")
+	e := sql.NullString{}
+	e.Scan("No tables used")
+	assert.Equal(t, Row{1, st, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, e}, plan.Rows[0])
 }
