@@ -7,6 +7,7 @@ import (
 
 	"github.com/YunosukeY/exsqus/internal/util"
 	"github.com/fsnotify/fsnotify"
+	"github.com/google/uuid"
 	"github.com/rs/zerolog/log"
 )
 
@@ -51,11 +52,17 @@ func Run() {
 			}
 
 			if event.Op&fsnotify.Write == fsnotify.Write && event.Name == path {
+				id, err := uuid.NewRandom()
+				if err != nil {
+					log.Warn().Err(err).Send()
+				}
+
 				l, err := util.GetLastQueryLog(reader)
 				if err != nil {
 					log.Info().Err(err).Msg("Failed to get last query log")
 					continue
 				}
+				l.Id = id.String()
 				log.Info().Interface("log", l).Send()
 
 				plan, err := util.GetPlan(db, l.Query)
@@ -63,6 +70,7 @@ func Run() {
 					log.Info().Err(err).Msg("Failed to get plan")
 					continue
 				}
+				plan.Id = id.String()
 				log.Info().Interface("plan", plan).Send()
 			}
 		case err, ok := <-watcher.Errors:

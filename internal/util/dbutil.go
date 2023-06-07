@@ -52,7 +52,12 @@ type Row struct {
 	SelectType, Table, Partitions, AccessType, PossibleKeys, Key, KeyLen, Ref, Rows, Filtered, Extra sql.NullString
 }
 
-func GetPlan(db *sql.DB, query string) ([]Row, error) {
+type Plan struct {
+	Rows []Row
+	Id   string
+}
+
+func GetPlan(db *sql.DB, query string) (*Plan, error) {
 	rows, err := db.Query("EXPLAIN " + query)
 	if err != nil {
 		return nil, err
@@ -70,5 +75,5 @@ func GetPlan(db *sql.DB, query string) ([]Row, error) {
 
 		rs = append(rs, r)
 	}
-	return rs, nil
+	return &Plan{rs, ""}, nil
 }

@@ -22,7 +22,7 @@ var queryTimePattern = regexp.MustCompile(`# Query_time: ([\d\.]*).*Lock_time: (
 var queryPattern = regexp.MustCompile(`(.*)\n`)
 
 type Log struct {
-	Time, QueryTime, LockTime, RowsSent, RowsExamined, Query string
+	Id, Time, QueryTime, LockTime, RowsSent, RowsExamined, Query string
 }
 
 func GetLastQueryLog(reader *bufio.Reader) (*Log, error) {
@@ -53,5 +53,5 @@ func GetLastQueryLog(reader *bufio.Reader) (*Log, error) {
 	if time == "" || queryTime == "" || lockTime == "" || rowsSent == "" || rowsExamined == "" || query == "" {
 		return nil, fmt.Errorf("No query log found")
 	}
-	return &Log{time, queryTime, lockTime, rowsSent, rowsExamined, query}, nil
+	return &Log{"", time, queryTime, lockTime, rowsSent, rowsExamined, query}, nil
 }
