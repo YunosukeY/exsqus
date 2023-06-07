@@ -21,7 +21,6 @@ services:
     image: app
     build: .
     container_name: app
-    entrypoint: ["main"]
     environment:
       MYSQL_HOST: db
       MYSQL_DATABASE: test
