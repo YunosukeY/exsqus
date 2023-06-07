@@ -3,13 +3,11 @@ package app
 import (
 	"github.com/YunosukeY/exsqus/internal/util"
 	"github.com/fsnotify/fsnotify"
-	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
 
 func Run() {
-	zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	log.Logger = log.With().Caller().Logger()
+	util.SetupLogger()
 
 	path := util.GetLogFilePath()
 	log.Info().Str("log file path", path).Send()
