@@ -7,8 +7,8 @@ import (
 )
 
 func TestGetWatcher(t *testing.T) {
-	watcher, err := GetWatcher("./")
+	watcher, err := GetWatcher("watcherutil.go")
 
 	assert.Nil(t, err)
-	assert.Equal(t, []string{"./"}, watcher.WatchList())
+	assert.Equal(t, []string{"watcherutil.go"}, watcher.WatchList())
 }
