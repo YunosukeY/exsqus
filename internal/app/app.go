@@ -2,6 +2,7 @@ package app
 
 import (
 	"bufio"
+	"io"
 	"os"
 
 	"github.com/YunosukeY/exsqus/internal/util"
@@ -36,6 +37,11 @@ func Run() {
 	}
 	defer file.Close()
 	reader := bufio.NewReader(file)
+	for {
+		if _, err := reader.ReadString('\n'); err == io.EOF {
+			break
+		}
+	}
 
 	for {
 		select {
