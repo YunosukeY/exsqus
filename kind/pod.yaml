@@ -1,0 +1,64 @@
+---
+kind: Pod
+apiVersion: v1
+metadata:
+  namespace: app
+  name: db
+  labels:
+    app: app
+    tier: db
+spec:
+  initContainers:
+    - name: log-file-permission
+      image: alpine:3.18
+      command: ["/bin/sh","-c","touch /tmp/slow.log && chmod 666 /tmp/slow.log"]
+      volumeMounts:
+        - name: cache
+          mountPath: /tmp
+  containers:
+    - image: mysql:8.0.31
+      name: mysql
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: test
+      ports:
+        - containerPort: 3306
+          name: mysql
+      volumeMounts:
+        - name: mysql-initdb
+          mountPath: /docker-entrypoint-initdb.d
+        - name: cache
+          mountPath: /tmp
+      livenessProbe:
+        tcpSocket:
+          port: 3306
+      readinessProbe:
+        tcpSocket:
+          port: 3306
+      startupProbe:
+        tcpSocket:
+          port: 3306
+        failureThreshold: 10
+        periodSeconds: 10
+    - image: kimitsu/exsqus
+      name: exsqus
+      env:
+        - name: MYSQL_HOST
+          value: localhost
+        - name: MYSQL_DATABASE
+          value: test
+        - name: MYSQL_USER
+          value: root
+        - name: MYSQL_PASSWORD
+          value: root
+      volumeMounts:
+        - name: cache
+          mountPath: /tmp
+  volumes:
+    - name: mysql-initdb
+      configMap:
+        name: mysql-initdb-config
+    - name: cache
+      emptyDir: {}
