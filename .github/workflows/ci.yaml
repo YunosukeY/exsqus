@@ -1,4 +1,4 @@
-name: lint
+name: ci
 on:
   push:
     branches:
@@ -7,14 +7,12 @@ on:
     branches:
       - master
 jobs:
-  lint:
+  ci:
     runs-on: ubuntu-22.04
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v3
-      - uses: aquaproj/aqua-installer@v2.1.1
+      - uses: actions/setup-go@v4
         with:
-          aqua_version: v2.8.0
-      - run: |
-          golangci-lint run
-          hadolint Dockerfile
+          go-version: '1.19.x'
+      - run: ./script/ci.sh
