@@ -7,7 +7,7 @@ on:
     branches:
       - master
 jobs:
-  lint:
+  golangci-lint:
     runs-on: ubuntu-22.04
     timeout-minutes: 3
     steps:
@@ -15,6 +15,13 @@ jobs:
       - uses: aquaproj/aqua-installer@v2.1.1
         with:
           aqua_version: v2.8.0
-      - run: |
-          golangci-lint run
-          hadolint Dockerfile
+      - run: golangci-lint run
+  hadolint:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aquaproj/aqua-installer@v2.1.1
+        with:
+          aqua_version: v2.8.0
+      - run: hadolint Dockerfile
