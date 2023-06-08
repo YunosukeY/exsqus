@@ -9,6 +9,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-22.04
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v3
       - uses: aquaproj/aqua-installer@v2.1.1

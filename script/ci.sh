@@ -12,7 +12,7 @@ MYSQL_DATABASE=test
 MYSQL_USER=root
 MYSQL_PASSWORD=root
 EOF
-sh "${repo_dir}/script/wait-db.sh"
+bash "${repo_dir}/script/wait-db.sh"
 go test -cover "${repo_dir}/internal/..."
 
 docker compose down
