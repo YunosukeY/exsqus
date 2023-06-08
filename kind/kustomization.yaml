@@ -8,4 +8,5 @@ generatorOptions:
   disableNameSuffixHash: true
 resources:
   - namespace.yaml
-  - db.yaml
+  - service.yaml
+  - deployment.yaml
