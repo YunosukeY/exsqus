@@ -8,5 +8,4 @@ generatorOptions:
   disableNameSuffixHash: true
 resources:
   - namespace.yaml
-  - node-port.yaml
-  - pod.yaml
+  - db.yaml
