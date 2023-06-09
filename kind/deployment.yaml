@@ -62,6 +62,20 @@ spec:
           volumeMounts:
             - name: cache
               mountPath: /tmp
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8888
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8888
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8888
+            initialDelaySeconds: 3
+            periodSeconds: 3
       volumes:
         - name: mysql-initdb
           configMap:
