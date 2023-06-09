@@ -6,7 +6,6 @@ repo_dir="$(git rev-parse --show-toplevel)"
 
 chmod o+w "${repo_dir}/test-data/logs" # for mysql container
 docker compose up -d
-sudo chmod o+r "${repo_dir}/test-data/logs/slow.log" # for app container
 mysql --protocol=tcp -h localhost -P 3306 -u root -proot -e "SELECT SLEEP(2);"
 logs="$(docker logs app 2>&1)"
 
