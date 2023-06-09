@@ -24,13 +24,6 @@ spec:
       containers:
         - image: mysql:8.0.31
           name: mysql
-          command:
-            - "/bin/bash"
-            - "-c"
-            - |
-              chmod +w /tmp;
-              ls -l /;
-              ./docker-entrypoint.sh
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: root
