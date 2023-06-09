@@ -1,7 +1,6 @@
 package app
 
 import (
-	"bufio"
 	"os"
 
 	"github.com/YunosukeY/exsqus/internal/util"
@@ -36,10 +35,7 @@ func Run() {
 		log.Fatal().Err(err).Send()
 	}
 	defer file.Close()
-	reader := bufio.NewReader(file)
-	if err := util.SkipAll(reader); err != nil {
-		log.Fatal().Err(err).Send()
-	}
+	util.SkipAll(file)
 
 	for {
 		select {
@@ -54,7 +50,7 @@ func Run() {
 					log.Err(err).Send()
 				}
 
-				l, err := util.GetLastQueryLog(reader)
+				l, err := util.GetLastQueryLog(file)
 				if err != nil {
 					log.Err(err).Msg("Failed to get last query log")
 					continue

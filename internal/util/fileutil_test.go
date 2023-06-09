@@ -29,18 +29,18 @@ SELECT SLEEP(2);
 
 func TestGetTime(t *testing.T) {
 	test := "# Time: 2023-06-07T11:58:58.688716Z\n"
-	reader := bufio.NewReader(strings.NewReader(test))
+	scanner := bufio.NewScanner(strings.NewReader(test))
 
-	time, err := getTime(reader)
+	time, err := getTime(scanner)
 	assert.Nil(t, err)
 	assert.Equal(t, "2023-06-07T11:58:58.688716Z", time)
 }
 
 func TestGetQueryTime(t *testing.T) {
 	test := "# Query_time: 2.001390  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1\n"
-	reader := bufio.NewReader(strings.NewReader(test))
+	scanner := bufio.NewScanner(strings.NewReader(test))
 
-	queryTime, lockTime, rowsSent, rowsExamined, err := getQueryTime(reader)
+	queryTime, lockTime, rowsSent, rowsExamined, err := getQueryTime(scanner)
 	assert.Nil(t, err)
 	assert.Equal(t, "2.001390", queryTime)
 	assert.Equal(t, "0.000000", lockTime)
@@ -50,9 +50,9 @@ func TestGetQueryTime(t *testing.T) {
 
 func TestGetQuery(t *testing.T) {
 	test := "SELECT SLEEP(2);\n"
-	reader := bufio.NewReader(strings.NewReader(test))
+	scanner := bufio.NewScanner(strings.NewReader(test))
 
-	time, err := getQuery(reader)
+	time, err := getQuery(scanner)
 	assert.Nil(t, err)
 	assert.Equal(t, "SELECT SLEEP(2);", time)
 }

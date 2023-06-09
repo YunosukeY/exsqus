@@ -1,7 +1,6 @@
 package util
 
 import (
-	"bufio"
 	"io"
 	"strings"
 	"testing"
@@ -15,11 +14,11 @@ func TestSkipAll(t *testing.T) {
 	3
 	4
 	5`
-	reader := bufio.NewReader(strings.NewReader(test))
+	reader := strings.NewReader(test)
 
-	err := SkipAll(reader)
+	SkipAll(reader)
+
+	bs, err := io.ReadAll(reader)
 	assert.Nil(t, err)
-
-	_, err = reader.ReadString('\n')
-	assert.Equal(t, io.EOF, err)
+	assert.Equal(t, []byte{}, bs)
 }

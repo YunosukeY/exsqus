@@ -3,6 +3,7 @@ package util
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 )
@@ -20,54 +21,54 @@ type Log struct {
 	Id, Time, QueryTime, LockTime, RowsSent, RowsExamined, Query string
 }
 
-func GetLastQueryLog(reader *bufio.Reader) (*Log, error) {
+func GetLastQueryLog(reader io.Reader) (*Log, error) {
+	scanner := bufio.NewScanner(reader)
+
 	// A slow query log consists of five rows.
 
 	// The first row is like "# Time: 2023-06-07T11:58:58.688716Z".
-	time, err := getTime(reader)
+	time, err := getTime(scanner)
 	if err != nil {
 		return nil, err
 	}
 
 	// The second row is like "# User@Host: root[root] @  [192.168.16.1]  Id:    10".
 	// Skip it.
-	if _, err = reader.ReadString('\n'); err != nil {
-		return nil, err
+	if !scanner.Scan() {
+		return nil, fmt.Errorf("Failed to get new row")
 	}
 
 	// The third row is like "# Query_time: 2.001390  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1".
-	queryTime, lockTime, rowsSent, rowsExamined, err := getQueryTime(reader)
+	queryTime, lockTime, rowsSent, rowsExamined, err := getQueryTime(scanner)
 	if err != nil {
 		return nil, err
 	}
 
 	// The forth row is like "SET timestamp=1686139143;".
 	// Skip it.
-	if _, err = reader.ReadString('\n'); err != nil {
-		return nil, err
+	if !scanner.Scan() {
+		return nil, fmt.Errorf("Failed to get new row")
 	}
 
 	// The last row is a query.
-	query, err := getQuery(reader)
+	query, err := getQuery(scanner)
 	if err != nil {
 		return nil, err
 	}
 
 	// Skip remaining rows
-	if err = SkipAll(reader); err != nil {
-		return nil, err
-	}
+	SkipAll(reader)
 
 	return &Log{"", time, queryTime, lockTime, rowsSent, rowsExamined, query}, nil
 }
 
 var timePattern = regexp.MustCompile(`# Time: (.*)`)
 
-func getTime(reader *bufio.Reader) (string, error) {
-	line, err := reader.ReadString('\n')
-	if err != nil {
-		return "", err
+func getTime(scanner *bufio.Scanner) (string, error) {
+	if !scanner.Scan() {
+		return "", fmt.Errorf("Failed to get new row")
 	}
+	line := scanner.Text()
 
 	if timePattern.MatchString(line) {
 		match := timePattern.FindStringSubmatch(line)
@@ -78,11 +79,11 @@ func getTime(reader *bufio.Reader) (string, error) {
 
 var queryTimePattern = regexp.MustCompile(`# Query_time: ([\d\.]*).*Lock_time: ([\d\.]*).*Rows_sent: (\d*).*Rows_examined: (\d+)`)
 
-func getQueryTime(reader *bufio.Reader) (string, string, string, string, error) {
-	line, err := reader.ReadString('\n')
-	if err != nil {
-		return "", "", "", "", err
+func getQueryTime(scanner *bufio.Scanner) (string, string, string, string, error) {
+	if !scanner.Scan() {
+		return "", "", "", "", fmt.Errorf("Failed to get new row")
 	}
+	line := scanner.Text()
 
 	if queryTimePattern.MatchString(line) {
 		match := queryTimePattern.FindStringSubmatch(line)
@@ -91,17 +92,9 @@ func getQueryTime(reader *bufio.Reader) (string, string, string, string, error) 
 	return "", "", "", "", fmt.Errorf("Query_time, Lock_time, Rows_sent, Rows_examined not found")
 }
 
-var queryPattern = regexp.MustCompile(`(.*)\n`)
-
-func getQuery(reader *bufio.Reader) (string, error) {
-	line, err := reader.ReadString('\n')
-	if err != nil {
-		return "", err
+func getQuery(scanner *bufio.Scanner) (string, error) {
+	if !scanner.Scan() {
+		return "", fmt.Errorf("Failed to get new row")
 	}
-
-	if queryPattern.MatchString(line) {
-		match := queryPattern.FindStringSubmatch(line)
-		return match[1], nil
-	}
-	return "", fmt.Errorf("Query not found")
+	return scanner.Text(), nil
 }
