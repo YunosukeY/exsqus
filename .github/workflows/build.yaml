@@ -3,12 +3,24 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-22.04
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v3
+      - id: versioning
+        uses: paulhatch/semantic-version@v5.0.2
+        with:
+          tag_prefix: "v"
+          major_pattern: "BREAKING CHANGE:"
+          minor_pattern: "feat:"
+          version_format: "${major}.${minor}.${patch}"
+          change_path: "."
+          bump_each_commit: true
       - uses: docker/login-action@v2
         with:
           username: kimitsu
@@ -16,4 +28,7 @@ jobs:
       - uses: docker/build-push-action@v4
         with:
           push: true
-          tags: kimitsu/exsqus:latest
+          tags: kimitsu/exsqus:${{ steps.versioning.outputs.version }}
+      - run: |
+          git tag ${{ steps.versioning.outputs.version_tag }}
+          git push origin ${{ steps.versioning.outputs.version_tag }}
