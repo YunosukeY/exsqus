@@ -3,6 +3,7 @@ package util
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 )
@@ -20,43 +21,43 @@ type Log struct {
 	Id, Time, QueryTime, LockTime, RowsSent, RowsExamined, Query string
 }
 
-func GetLastQueryLog(reader *bufio.Reader) (*Log, error) {
+func GetLastQueryLog(reader io.Reader) (*Log, error) {
+	breader := bufio.NewReader(reader)
+
 	// A slow query log consists of five rows.
 
 	// The first row is like "# Time: 2023-06-07T11:58:58.688716Z".
-	time, err := getTime(reader)
+	time, err := getTime(breader)
 	if err != nil {
 		return nil, err
 	}
 
 	// The second row is like "# User@Host: root[root] @  [192.168.16.1]  Id:    10".
 	// Skip it.
-	if _, err = reader.ReadString('\n'); err != nil {
+	if _, err = breader.ReadString('\n'); err != nil {
 		return nil, err
 	}
 
 	// The third row is like "# Query_time: 2.001390  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1".
-	queryTime, lockTime, rowsSent, rowsExamined, err := getQueryTime(reader)
+	queryTime, lockTime, rowsSent, rowsExamined, err := getQueryTime(breader)
 	if err != nil {
 		return nil, err
 	}
 
 	// The forth row is like "SET timestamp=1686139143;".
 	// Skip it.
-	if _, err = reader.ReadString('\n'); err != nil {
+	if _, err = breader.ReadString('\n'); err != nil {
 		return nil, err
 	}
 
 	// The last row is a query.
-	query, err := getQuery(reader)
+	query, err := getQuery(breader)
 	if err != nil {
 		return nil, err
 	}
 
 	// Skip remaining rows
-	if err = SkipAll(reader); err != nil {
-		return nil, err
-	}
+	SkipAll(reader)
 
 	return &Log{"", time, queryTime, lockTime, rowsSent, rowsExamined, query}, nil
 }
