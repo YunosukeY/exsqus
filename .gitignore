@@ -3,3 +3,5 @@ main
 slow.log
 
 .env
+
+node_modules

@@ -1,0 +1,12 @@
+{
+  "name": "exsqus",
+  "version": "0.0.0",
+  "description": "Monitors a slow query log file and automatically shows their execution plans.",
+  "main": "index.js",
+  "repository": "https://github.com/YunosukeY/exsqus.git",
+  "author": "YunosukeY <yunosuke@ueda.info.waseda.ac.jp>",
+  "license": "MIT",
+  "devDependencies": {
+    "semantic-release": "21.0.4"
+  }
+}
