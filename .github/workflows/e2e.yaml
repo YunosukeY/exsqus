@@ -15,7 +15,7 @@ jobs:
       - run: ./script/docker-e2e.sh
   kind:
     runs-on: ubuntu-22.04
-    timeout-minutes: 5
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v3
       - uses: aquaproj/aqua-installer@v2.1.1
