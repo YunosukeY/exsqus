@@ -21,6 +21,10 @@ repo_dir="$(git rev-parse --show-toplevel)"
 if [ "$command" == "create" ]; then
   kind create cluster --config "${repo_dir}/kind/cluster.yaml"
   kubectl apply -k "${repo_dir}/kind"
+  sleep 120
+  kubectl logs -n app Deployment/db
+  sleep 120
+  kubectl logs -n app Deployment/db
   kubectl wait --for condition=available deployment/db --namespace=app --timeout=300s
 elif [ "$command" == "run" ]; then
   mysql --protocol=tcp -h localhost -P 3306 -u root -proot -e "SELECT SLEEP(2);"
