@@ -5,6 +5,6 @@ RUN go mod download
 COPY . .
 RUN CGO_ENABLED=0 go build cmd/app/main.go
 
-FROM gcr.io/distroless/static-debian11:nonroot
+FROM gcr.io/distroless/static-debian11
 COPY --from=builder /work/main /usr/local/bin/
 ENTRYPOINT ["main"]
