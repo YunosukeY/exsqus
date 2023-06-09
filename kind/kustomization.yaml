@@ -1,0 +1,12 @@
+---
+configMapGenerator:
+  - name: mysql-initdb-config
+    namespace: app
+    files:
+      - mysql/init/00_variables.sql
+generatorOptions:
+  disableNameSuffixHash: true
+resources:
+  - namespace.yaml
+  - service.yaml
+  - deployment.yaml
