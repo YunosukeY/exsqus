@@ -37,6 +37,8 @@ func Run() {
 	defer file.Close()
 	util.SkipAll(file)
 
+	go util.RunCommonHandler()
+
 	for {
 		select {
 		case event, ok := <-watcher.Events:
