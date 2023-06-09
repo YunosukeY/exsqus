@@ -59,3 +59,6 @@ The default value is `/tmp/slow.log`.
 See the [docker-compose.yml](./docker-compose.yml).
 
 ### Kubernetes
+
+exsqus is deployed as a sidecar.
+See the [example manifest](./kind/deployment.yaml).
