@@ -18,8 +18,7 @@ services:
       timeout: 1s
       retries: 20
   app:
-    image: app
-    build: .
+    image: kimitsu/exsqus:test
     container_name: app
     environment:
       MYSQL_HOST: db

@@ -48,7 +48,7 @@ spec:
               port: 3306
             failureThreshold: 10
             periodSeconds: 10
-        - image: kimitsu/exsqus
+        - image: kimitsu/exsqus:test
           name: exsqus
           env:
             - name: MYSQL_HOST
