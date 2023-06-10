@@ -51,6 +51,7 @@ The password in the MySQL server.
 
 The path to the slow query log file in the exsqus container.
 The default value is `/tmp/slow.log`.
+If you want to specify multiple paths, separate them with a comma.
 
 ## Examples
 
@@ -60,5 +61,4 @@ See the [docker-compose.yml](./docker-compose.yml).
 
 ### Kubernetes
 
-exsqus is deployed as a sidecar.
-See the [example manifest](./kind/deployment.yaml).
+An example of sidecar pattern: [manifest](./kind/deployment.yaml).
