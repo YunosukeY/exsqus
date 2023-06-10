@@ -68,10 +68,11 @@ func getExecInfo(line string) (string, string, string, string, error) {
 }
 
 func getQuery(scanner *bufio.Scanner) (string, error) {
-	var query string
+	var qarr []string
 	for scanner.Scan() {
-		query += scanner.Text()
+		qarr = append(qarr, scanner.Text())
 	}
+	query := strings.Join(qarr, " ")
 
 	if query == "" {
 		return "", fmt.Errorf("Failed to get query")

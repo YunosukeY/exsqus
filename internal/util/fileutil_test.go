@@ -14,8 +14,8 @@ func TestGetLastQueryLog(t *testing.T) {
 # User@Host: root[root] @  [192.168.16.1]  Id:    12
 # Query_time: 2.001390  Lock_time: 0.000000 Rows_sent: 1  Rows_examined: 1
 SET timestamp=1686139143;
-SELECT SLEEP(2);
-# This row will be skipped.
+SELECT
+SLEEP(2);
 `
 	reader := bufio.NewReader(strings.NewReader(test))
 
