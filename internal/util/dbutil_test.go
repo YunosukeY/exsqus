@@ -22,13 +22,13 @@ func TestGetConfig(t *testing.T) {
 	os.Setenv("MYSQL_DATABASE", "db")
 	c, err = GetConfig()
 	assert.Nil(t, err)
-	assertEqual(t, mysql.Config{Addr: "localhost:3306", Net: "tcp", DBName: "db", User: "user", Passwd: "pass"}, c)
+	assertEqual(t, &mysql.Config{Addr: "localhost:3306", Net: "tcp", DBName: "db", User: "user", Passwd: "pass"}, c)
 
 	os.Setenv("MYSQL_PORT", "33060")
 	os.Setenv("MYSQL_PROTOCOL", "udp")
 	c, err = GetConfig()
 	assert.Nil(t, err)
-	assertEqual(t, mysql.Config{Addr: "localhost:33060", Net: "udp", DBName: "db", User: "user", Passwd: "pass"}, c)
+	assertEqual(t, &mysql.Config{Addr: "localhost:33060", Net: "udp", DBName: "db", User: "user", Passwd: "pass"}, c)
 
 	os.Setenv("MYSQL_HOST", "")
 	os.Setenv("MYSQL_PORT", "")
