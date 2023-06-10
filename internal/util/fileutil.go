@@ -6,15 +6,16 @@ import (
 	"io"
 	"os"
 	"regexp"
+	"strings"
 )
 
-func GetLogFilePath() string {
-	path := os.Getenv("LOG_FILE_PATH")
-	if path == "" {
-		path = "/tmp/slow.log"
+func GetLogFilePaths() []string {
+	paths := os.Getenv("LOG_FILE_PATH")
+	if paths == "" {
+		paths = "/tmp/slow.log"
 	}
 
-	return path
+	return strings.Split(paths, ",")
 }
 
 type Log struct {
