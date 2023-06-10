@@ -15,8 +15,12 @@ func Run() {
 	paths := util.GetLogFilePaths()
 	log.Info().Interface("log file paths", paths).Send()
 
-	c := util.GetConfig()
-	db, err := util.GetDB(c)
+	c, err := util.GetConfig()
+	if err != nil {
+		log.Fatal().Err(err).Send()
+	}
+	log.Info().Str("dsn", c.FormatDSN()).Send()
+	db, err := util.GetDB(*c)
 	if err != nil {
 		log.Fatal().Err(err).Send()
 	}
