@@ -7,13 +7,16 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     timeout-minutes: 3
+    permissions:
+      contents: write # semantic-releaseがrepositoryへのpush権限を要求する
+      issues: read    # semantic-releaseがissueを検索できるように
     steps:
       - uses: actions/checkout@v3
-      - uses: docker/login-action@v2
+      - uses: actions/setup-node@v3
         with:
-          username: kimitsu
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - uses: docker/build-push-action@v4
-        with:
-          push: true
-          tags: kimitsu/exsqus:latest
+          node-version: 18.x
+      - run: yarn install --pure-lockfile
+      - env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: yarn semantic-release

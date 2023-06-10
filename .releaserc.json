@@ -1,0 +1,84 @@
+{
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "releaseRules": [
+          {
+            "type": "refactor",
+            "release": "patch"
+          },
+          {
+            "type": "chore",
+            "release": "patch"
+          },
+          {
+            "type": "major",
+            "release": "major"
+          }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            {
+              "type": "fix(deps)",
+              "section": "update dependency"
+            },
+            {
+              "type": "chore(deps)",
+              "section": "update dependency"
+            },
+            {
+              "type": "major",
+              "section": "BREAKING CHANGE"
+            },
+            {
+              "type": "feat",
+              "section": "Features"
+            },
+            {
+              "type": "fix",
+              "section": "Bug Fixes"
+            },
+            {
+              "type": "chore",
+              "section": "chore"
+            },
+            {
+              "type": "docs",
+              "section": "docs"
+            },
+            {
+              "type": "style",
+              "section": "style"
+            },
+            {
+              "type": "refactor",
+              "section": "refactor"
+            },
+            {
+              "type": "perf",
+              "section": "perf"
+            },
+            {
+              "type": "test",
+              "section": "test"
+            }
+          ]
+        }
+      }
+    ],
+    "@semantic-release/github",
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "./script/build-and-push.sh ${nextRelease.version}"
+      }
+    ]
+  ]
+}
