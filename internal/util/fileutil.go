@@ -94,8 +94,13 @@ func getQueryTime(scanner *bufio.Scanner) (string, string, string, string, error
 }
 
 func getQuery(scanner *bufio.Scanner) (string, error) {
-	if !scanner.Scan() {
-		return "", fmt.Errorf("Failed to get new row")
+	var query string
+	for scanner.Scan() {
+		query += scanner.Text()
 	}
-	return scanner.Text(), nil
+
+	if query == "" {
+		return "", fmt.Errorf("Failed to get query")
+	}
+	return query, nil
 }
