@@ -7,6 +7,13 @@
 
 Monitors a slow query log file and automatically shows their execution plans.
 
+## QuickStart
+
+```
+docker pull kimitsu/exsqus
+docker run --rm -e MYSQL_HOST={MYSQL_HOST} -e MYSQL_DATABASE={MYSQL_DATABASE} -e MYSQL_USER={MYSQL_USER} -e MYSQL_PASSWORD={MYSQL_PASSWORD} -v {PATH_TO_SLOW_QUERY_LOG_DIR}:/tmp kimitsu/exsqus
+```
+
 ## Usage
 
 Prerequisites (MySQL)
