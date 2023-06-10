@@ -1,0 +1,15 @@
+name: manual build
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  manual-build:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v3
+      - env:
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run:
+          ./script/build-and-push.sh 1.1.1
