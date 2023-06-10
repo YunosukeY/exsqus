@@ -10,5 +10,5 @@ func TestGetWatcher(t *testing.T) {
 	watcher, err := GetWatcher([]string{"watcherutil.go"})
 
 	assert.Nil(t, err)
-	assert.Equal(t, []string{"watcherutil.go"}, watcher.WatchList())
+	assertEqual(t, []string{"watcherutil.go"}, watcher.WatchList())
 }

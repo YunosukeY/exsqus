@@ -21,10 +21,10 @@ SELECT SLEEP(2);
 
 	log, err := GetLastQueryLog(reader)
 	assert.Nil(t, err)
-	assert.Equal(t, &Log{Time: "2023-06-07T11:59:05.164053Z", QueryTime: "2.001390", LockTime: "0.000000", RowsSent: "1", RowsExamined: "1", Query: "SELECT SLEEP(2);"}, log)
+	assertEqual(t, &Log{Time: "2023-06-07T11:59:05.164053Z", QueryTime: "2.001390", LockTime: "0.000000", RowsSent: "1", RowsExamined: "1", Query: "SELECT SLEEP(2);"}, log)
 
 	_, err = reader.ReadString('\n')
-	assert.Equal(t, io.EOF, err)
+	assertEqual(t, io.EOF, err)
 }
 
 func TestGetTime(t *testing.T) {
@@ -33,7 +33,7 @@ func TestGetTime(t *testing.T) {
 
 	time, err := getTime(scanner)
 	assert.Nil(t, err)
-	assert.Equal(t, "2023-06-07T11:58:58.688716Z", time)
+	assertEqual(t, "2023-06-07T11:58:58.688716Z", time)
 }
 
 func TestGetQueryTime(t *testing.T) {
@@ -42,10 +42,10 @@ func TestGetQueryTime(t *testing.T) {
 
 	queryTime, lockTime, rowsSent, rowsExamined, err := getQueryTime(scanner)
 	assert.Nil(t, err)
-	assert.Equal(t, "2.001390", queryTime)
-	assert.Equal(t, "0.000000", lockTime)
-	assert.Equal(t, "1", rowsSent)
-	assert.Equal(t, "1", rowsExamined)
+	assertEqual(t, "2.001390", queryTime)
+	assertEqual(t, "0.000000", lockTime)
+	assertEqual(t, "1", rowsSent)
+	assertEqual(t, "1", rowsExamined)
 }
 
 func TestGetQuery(t *testing.T) {
@@ -54,5 +54,5 @@ func TestGetQuery(t *testing.T) {
 
 	time, err := getQuery(scanner)
 	assert.Nil(t, err)
-	assert.Equal(t, "SELECT SLEEP(2);", time)
+	assertEqual(t, "SELECT SLEEP(2);", time)
 }

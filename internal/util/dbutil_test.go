@@ -10,19 +10,25 @@ import (
 )
 
 func TestGetConfig(t *testing.T) {
-	var c mysql.Config
+	var c *mysql.Config
+	var err error
 
-	c = GetConfig()
-	assert.Equal(t, mysql.Config{Addr: ":3306", Net: "tcp"}, c)
+	_, err = GetConfig()
+	assert.Error(t, err)
 
 	os.Setenv("MYSQL_HOST", "localhost")
-	os.Setenv("MYSQL_PORT", "33060")
 	os.Setenv("MYSQL_USER", "user")
 	os.Setenv("MYSQL_PASSWORD", "pass")
 	os.Setenv("MYSQL_DATABASE", "db")
+	c, err = GetConfig()
+	assert.Nil(t, err)
+	assertEqual(t, &mysql.Config{Addr: "localhost:3306", Net: "tcp", DBName: "db", User: "user", Passwd: "pass"}, c)
+
+	os.Setenv("MYSQL_PORT", "33060")
 	os.Setenv("MYSQL_PROTOCOL", "udp")
-	c = GetConfig()
-	assert.Equal(t, mysql.Config{Addr: "localhost:33060", Net: "udp", DBName: "db", User: "user", Passwd: "pass"}, c)
+	c, err = GetConfig()
+	assert.Nil(t, err)
+	assertEqual(t, &mysql.Config{Addr: "localhost:33060", Net: "udp", DBName: "db", User: "user", Passwd: "pass"}, c)
 
 	os.Setenv("MYSQL_HOST", "")
 	os.Setenv("MYSQL_PORT", "")
@@ -38,8 +44,8 @@ func TestGetPlan(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	c := GetConfig()
-	db, err := GetDB(c)
+	c, _ := GetConfig()
+	db, err := GetDB(*c)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -59,5 +65,5 @@ func TestGetPlan(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, Row{1, st, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, e}, plan.Rows[0])
+	assertEqual(t, Row{1, st, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, e}, plan.Rows[0])
 }

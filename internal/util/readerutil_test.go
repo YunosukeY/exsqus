@@ -20,5 +20,5 @@ func TestSkipAll(t *testing.T) {
 
 	bs, err := io.ReadAll(reader)
 	assert.Nil(t, err)
-	assert.Equal(t, []byte{}, bs)
+	assertEqual(t, []byte{}, bs)
 }
