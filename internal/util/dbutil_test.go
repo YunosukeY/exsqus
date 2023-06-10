@@ -22,13 +22,13 @@ func TestGetConfig(t *testing.T) {
 	os.Setenv("MYSQL_DATABASE", "db")
 	c, err = GetConfig()
 	assert.Nil(t, err)
-	assert.Equal(t, mysql.Config{Addr: "localhost:3306", Net: "tcp", DBName: "db", User: "user", Passwd: "pass"}, c)
+	assertEqual(t, mysql.Config{Addr: "localhost:3306", Net: "tcp", DBName: "db", User: "user", Passwd: "pass"}, c)
 
 	os.Setenv("MYSQL_PORT", "33060")
 	os.Setenv("MYSQL_PROTOCOL", "udp")
 	c, err = GetConfig()
 	assert.Nil(t, err)
-	assert.Equal(t, mysql.Config{Addr: "localhost:33060", Net: "udp", DBName: "db", User: "user", Passwd: "pass"}, c)
+	assertEqual(t, mysql.Config{Addr: "localhost:33060", Net: "udp", DBName: "db", User: "user", Passwd: "pass"}, c)
 
 	os.Setenv("MYSQL_HOST", "")
 	os.Setenv("MYSQL_PORT", "")
@@ -65,5 +65,5 @@ func TestGetPlan(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.Equal(t, Row{1, st, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, e}, plan.Rows[0])
+	assertEqual(t, Row{1, st, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, sql.NullString{}, e}, plan.Rows[0])
 }
