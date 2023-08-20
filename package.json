@@ -9,6 +9,6 @@
   "devDependencies": {
     "@semantic-release/exec": "6.0.3",
     "conventional-changelog-conventionalcommits": "6.1.0",
-    "semantic-release": "21.0.7"
+    "semantic-release": "21.0.8"
   }
 }
