@@ -13,3 +13,4 @@ packages:
 - name: hadolint/hadolint@v2.12.0
 - name: kubernetes-sigs/kind@v0.20.0
 - name: kubernetes/kubectl@v1.28.4
+- name: koalaman/shellcheck@v0.9.0
