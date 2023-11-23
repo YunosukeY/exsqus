@@ -13,6 +13,6 @@ MYSQL_USER=root
 MYSQL_PASSWORD=root
 EOF
 bash "${repo_dir}/script/wait-db.sh"
-go test -cover "${repo_dir}/internal/..."
+go test -race -coverprofile=coverage.out -covermode=atomic "${repo_dir}/internal/..."
 
 docker compose down
