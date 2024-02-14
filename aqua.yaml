@@ -12,5 +12,5 @@ packages:
 - name: golangci/golangci-lint@v1.56.1
 - name: hadolint/hadolint@v2.12.0
 - name: kubernetes-sigs/kind@v0.21.0
-- name: kubernetes/kubectl@v1.29.1
+- name: kubernetes/kubectl@v1.29.2
 - name: koalaman/shellcheck@v0.9.0
