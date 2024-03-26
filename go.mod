@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/fsnotify/fsnotify v1.7.0
-	github.com/go-sql-driver/mysql v1.8.0
+	github.com/go-sql-driver/mysql v1.8.1
 )
 
 require (
