@@ -8,7 +8,7 @@ on:
       - master
 jobs:
   golangci-lint:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
@@ -17,7 +17,7 @@ jobs:
           aqua_version: v2.34.0
       - run: golangci-lint run
   hadolint:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
@@ -26,7 +26,7 @@ jobs:
           aqua_version: v2.34.0
       - run: hadolint Dockerfile
   shellcheck:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
