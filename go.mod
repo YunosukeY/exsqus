@@ -1,10 +1,12 @@
 module github.com/YunosukeY/exsqus
 
-go 1.19
+go 1.21
+
+toolchain go1.24.0
 
 require (
 	github.com/fsnotify/fsnotify v1.8.0
-	github.com/go-sql-driver/mysql v1.8.1
+	github.com/go-sql-driver/mysql v1.9.0
 )
 
 require (
