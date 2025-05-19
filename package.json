@@ -8,7 +8,7 @@
   "license": "MIT",
   "devDependencies": {
     "@semantic-release/exec": "7.1.0",
-    "conventional-changelog-conventionalcommits": "8.0.0",
+    "conventional-changelog-conventionalcommits": "9.0.0",
     "semantic-release": "24.2.4"
   }
 }
