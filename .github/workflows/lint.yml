@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v5
-      - uses: aquaproj/aqua-installer@v4.0.2
+      - uses: aquaproj/aqua-installer@v4.0.3
         with:
           aqua_version: v2.53.9
       - run: golangci-lint run
@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v5
-      - uses: aquaproj/aqua-installer@v4.0.2
+      - uses: aquaproj/aqua-installer@v4.0.3
         with:
           aqua_version: v2.53.9
       - run: hadolint Dockerfile
@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 3
     steps:
       - uses: actions/checkout@v5
-      - uses: aquaproj/aqua-installer@v4.0.2
+      - uses: aquaproj/aqua-installer@v4.0.3
         with:
           aqua_version: v2.53.9
       - run: shellcheck ./script/*.sh
