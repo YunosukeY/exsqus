@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: aquaproj/aqua-installer@v4.0.3
         with:
-          aqua_version: v2.53.9
+          aqua_version: v2.54.1
       - run: golangci-lint run
   hadolint:
     runs-on: ubuntu-24.04
@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: aquaproj/aqua-installer@v4.0.3
         with:
-          aqua_version: v2.53.9
+          aqua_version: v2.54.1
       - run: hadolint Dockerfile
   shellcheck:
     runs-on: ubuntu-24.04
@@ -32,5 +32,5 @@ jobs:
       - uses: actions/checkout@v5
       - uses: aquaproj/aqua-installer@v4.0.3
         with:
-          aqua_version: v2.53.9
+          aqua_version: v2.54.1
       - run: shellcheck ./script/*.sh
