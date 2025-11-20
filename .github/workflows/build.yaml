@@ -11,7 +11,7 @@ jobs:
       contents: write # semantic-releaseがrepositoryへのpush権限を要求する
       issues: read    # semantic-releaseがissueを検索できるように
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 24.x
