@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: aquaproj/aqua-installer@v4.0.4
         with:
           aqua_version: v2.60.1
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: aquaproj/aqua-installer@v4.0.4
         with:
           aqua_version: v2.60.1
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 3
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: aquaproj/aqua-installer@v4.0.4
         with:
           aqua_version: v2.60.1
