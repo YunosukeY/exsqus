@@ -92,10 +92,10 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@conventional-changelog/template@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@conventional-changelog/template/-/template-1.1.0.tgz#04a8058f4c6cd32a208459c6ebc15b029e7948de"
-  integrity sha512-zH/7Mjo+vEsGv4Lr9Sja1Eqk8WvWeCVWkofz+3CTwow3IEWsMdfVrPR2iyMWQTrRQF5yZK3e++FVD+m9MENU0A==
+"@conventional-changelog/template@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@conventional-changelog/template/-/template-1.2.0.tgz#1de6f07fb55a67f9e32d67aab3124c56148163f2"
+  integrity sha512-12qHxvlKjHmP0PQ+17EREgC7lWyLwbph1RKcZQZ7k7ZWGmrxfxC9gadHGfvzr0g0u8BhiBGg3tks93txodlyRQ==
 
 "@fastify/busboy@^2.0.0":
   version "2.1.1"
@@ -982,12 +982,12 @@ conventional-changelog-angular@^8.0.0:
   dependencies:
     compare-func "^2.0.0"
 
-conventional-changelog-conventionalcommits@10.1.0:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-10.1.0.tgz#21a58362fa26c065b5294cda076f21fd1a1eed14"
-  integrity sha512-7R9MFPmE5y4jcXSItJhfCAyxSa27ZlM/xAxyF38SCN8uRrT+2ofmk7KyTutr1cZMMYwX48DsQ2GjFgqJNQwBbA==
+conventional-changelog-conventionalcommits@10.2.0:
+  version "10.2.0"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-10.2.0.tgz#83c4657069f6eb5fd3a7bab14c463590f8b7ff86"
+  integrity sha512-UtlM9GqolY7OmlQh5L/UEVoKsTUpTgUVy1PU8JN5gl5Ydaejb7WRklGliG1SKPxxj7hzA173eG3Kt5fYWE2pmg==
   dependencies:
-    "@conventional-changelog/template" "^1.1.0"
+    "@conventional-changelog/template" "^1.2.0"
 
 conventional-changelog-writer@^8.0.0:
   version "8.0.0"
