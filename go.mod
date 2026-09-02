@@ -6,7 +6,7 @@ toolchain go1.24.6
 
 require (
 	github.com/fsnotify/fsnotify v1.10.1
-	github.com/go-sql-driver/mysql v1.10.0
+	github.com/go-sql-driver/mysql v1.10.1
 )
 
 require (
