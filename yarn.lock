@@ -2634,10 +2634,10 @@ safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-semantic-release@26.0.0:
-  version "26.0.0"
-  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-26.0.0.tgz#a770e81e977fa5d0576ce60ba747f707ab7f0afa"
-  integrity sha512-yfmeYZaPiWJRY/axOilZBAbBSYwpuikFjSI1IbB0rcSSooXqFdme8e2TVpLIyT+GIsef8LJ7z5wqjpDZFuxyFg==
+semantic-release@26.0.1:
+  version "26.0.1"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-26.0.1.tgz#82db4ff59119af64e90aa5bf1ff05a82277ec874"
+  integrity sha512-nVDjgiPeiYuHtq4sjiJJVnq9i7zyXMFNGFL8MU0GWQLE0EPq98fTogh5RzHPvqxltnezmQ8QfiYZ100DFXyPQw==
   dependencies:
     "@semantic-release/commit-analyzer" "^14.0.0-beta.4"
     "@semantic-release/core" "^1.0.0-beta.13"
@@ -2645,7 +2645,7 @@ semantic-release@26.0.0:
     "@semantic-release/npm" "^14.0.0-beta.2"
     "@semantic-release/release-notes-generator" "^15.0.0-beta.3"
     debug "^4.0.0"
-    execa "^9.0.0"
+    execa "^10.0.0"
     find-versions "^6.0.0"
     lodash-es "^4.17.21"
     marked "^15.0.0"
